@@ -27,31 +27,3 @@ pdf(paste0(out_prefix, ".sigma2_IBD.pdf"), width=7/480*950, height=7/480*400) ; 
 pdf(paste0(out_prefix, ".pve_IBD.pdf"), width=7/480*950, height=7/480*400) ; linkagePlot(vclink$pve_IBD, ylab = "Prop. Variance Explained IBD") ; dev.off()
 pdf(paste0(out_prefix, ".pve_K.pdf"), width=7/480*950, height=7/480*400) ; linkagePlot(vclink$pve_K, ylab = "Prop. Variance Explained K") ; dev.off()
 pdf(paste0(out_prefix, ".pve_K_IBD.pdf"), width=7/480*950, height=7/480*400) ; linkagePlot(vclink$pve_IBD + vclink$pve_K, ylab = "Prop Variance Explained") ; dev.off()
-
-#QQ plot
-source("/net/wonderland/home/gzajac/scripts/Manhattan_QQ.R")
-
-# results = read.table("/net/wonderland/home/gzajac/IBD/sardinia_king2.1.2/EMO_MCH/MAF0.05Allchr-R2sameasPapersGOOD-prune.king.kin0.diag0.05.segments.diag2.EMO_MCH-normalized.vc1.pvalues.txt", header=T, stringsAsFactors=F, comment.char="", check.names=F)
-# results = read.table(in_file, header=T, stringsAsFactors=F, comment.char="", check.names=F)
-# results = results[!is.na(results$NEGLOG10PVALUE),]
-        # prepanel.qqunif= function(x,y,...) {
-        #         A = list()
-        #         A$xlim = range(x)*1.02
-        #         A$xlim[1]=0
-        #         # A$ylim = A$xlim
-        #         A$ylim = range(y)*1.02
-        #         A$ylim[1]=0
-        #         return(A)
-        # }
-pvalue.no.na = vclink$pvalue[!is.na(vclink$pvalue)]
-
-#calc CG-lambda
-chisq.no.na = qchisq(pvalue.no.na, df=1, lower.tail=F)
-GC = median(chisq.no.na) / qchisq(0.5, df=1, lower.tail=F)
-pdf(paste0(out_prefix, ".qq.pdf"))
-qqunif.plot(pvalue.no.na, already.transformed=F, main = paste0("GC = ", round(GC,4)))
-dev.off()
-
-# pdf()
-
-# def.off()
