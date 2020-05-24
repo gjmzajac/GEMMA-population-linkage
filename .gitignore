@@ -1,0 +1,7 @@
+*.o
+*.tar.gz
+example/output/
+test/
+todo.txt
+*_float*
+*bak*
